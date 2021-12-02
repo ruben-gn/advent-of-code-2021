@@ -10,7 +10,7 @@ import java.util.List;
 public class Day1 {
 
     public static void main(String[] args) throws IOException {
-        var input = ResourceLoader.getLines("day1/input1.txt");
+        var input = ResourceLoader.getLines("day1/input.txt");
         var depths = input.stream()
                 .map(Integer::parseInt)
                 .toList();
