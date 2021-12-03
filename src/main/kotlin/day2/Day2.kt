@@ -1,4 +1,4 @@
-package day1
+package day2
 
 import nl.grootnibbelink.advent2021.util.ResourceLoader
 
