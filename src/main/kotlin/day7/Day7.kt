@@ -30,18 +30,20 @@ class Day7 {
      * Naive implementations
      */
     fun part1(input: List<Int>): Int {
-        return rangeMinMax(input).map { destination ->
-            input.sumOf { distance(it, destination) }
-        }.minOf { it }
+        return rangeMinMax(input).map { getFuel(input, it) }.minOf { it }
     }
 
     fun part2(input: List<Int>): Int {
-        return rangeMinMax(input).map { destination ->
-            input.map { distance(it, destination) }.sumOf { (0..it).sum() }
-        }.minOf { it }
+        return rangeMinMax(input).map { getFuelIncrementing(input, it) }.minOf { it }
     }
 
     private fun rangeMinMax(input: List<Int>) = (input.minOf { it }..input.maxOf { it })
+
+    private fun getFuel(input: List<Int>, destination: Int) =
+        input.sumOf { distance(it, destination) }
+
+    private fun getFuelIncrementing(input: List<Int>, target: Int) =
+        input.map { distance(it, target) }.sumOf { it * (it + 1) / 2 }
 
     private fun distance(start: Int, end: Int) = abs(start - end)
 
@@ -50,16 +52,13 @@ class Day7 {
      */
     fun median(input: List<Int>): Int {
         val median = input.sorted()[input.size / 2]
-        return input.sumOf { distance(it, median) }
+        return getFuel(input, median)
     }
 
     fun mean(input: List<Int>): Int {
         val meanLow = floor(input.average()).toInt()
         val meanHigh = meanLow + 1
 
-        return minOf(getFuel(input, meanLow), getFuel(input, meanHigh))
+        return minOf(getFuelIncrementing(input, meanLow), getFuelIncrementing(input, meanHigh))
     }
-
-    private fun getFuel(input: List<Int>, target: Int) =
-        input.map { distance(it, target) }.sumOf { it * (it + 1) / 2 }
 }
